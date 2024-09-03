@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>5-Day Weather Forecast</title>
+</head>
+<body>
+    <div class="container">
+        <h1>5-Day Weather Forecast for {{ forecast[0].city }}</h1>
+        
+        <!-- New Section for Name and Info Button -->
+        <div class="info-section">
+            <p>Created by: Christopher Dalmau</p>
+            <button id="infoButton">Info</button>
+        </div>
+
+        {% for day in forecast %}
+            <div class="forecast-day">
+                <h2>{{ day.date }}</h2>
+                {% for entry in day.entries %}
+                    <p>{{ entry.datetime }} - {{ entry.temp_celsius }}°C / {{ entry.temp_fahrenheit }}°F - {{ entry.description }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        
+        <a href="{{ url_for('index') }}">Back</a>
+    </div>
+
+    <!-- Info Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>PM Accelerator: The Product Manager Accelerator Program is designed to support PM professionals through every stage of their career. From students looking for entry-level jobs to Directors looking to take on a leadership role, our program has helped over hundreds of students fulfill their career aspirations.
+                Our Product Manager Accelerator community are ambitious and committed. Through our program they have learnt, honed and developed new PM and leadership skills, giving them a strong foundation for their future endeavours.</p>
+        </div>
+    </div>
+
+    <!-- JavaScript for Modal -->
+    <script>
+        const modal = document.getElementById("infoModal");
+        const btn = document.getElementById("infoButton");
+        const span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
